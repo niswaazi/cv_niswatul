@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niswatul 'Azimah | Portfolio Fix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;600&family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="background-canvas"></div>
+    <div id="sparkle-container"></div>
+
+    <div class="app-wrapper">
+        <nav class="top-nav glass">
+            <span class="logo handwriting">Niswa_</span>
+            <div class="nav-links">
+                <button onclick="showPage('home')" class="nav-btn active">Beranda</button>
+                <button onclick="showPage('riddle')" class="nav-btn">Teka-Teki</button>
+            </div>
+        </nav>
+
+        <div class="content-area">
+            <section id="home" class="page active">
+                <div class="content-grid">
+                    
+                    <div class="card glass">
+                        <div class="img-wrapper">
+                            <div class="touch-me-label handwriting">Touch Me! ✨</div>
+                            <img src="assets/img1.jpg" alt="Profile" class="main-img" id="interactive-profile">
+                        </div>
+                        <div class="profile-text">
+                            <h1 class="main-name glow-text"><span>Niswatul</span> <span>'Azimah</span></h1>
+                            <p class="tagline handwriting red-txt">Informatika FMIPA USK _</p>
+                            <p class="bio-short glow-text">
+                                <span>Mahasiswa</span> <span>Informatika</span> <span>FMIPA</span> <span>Universitas</span> <span>Syiah</span> <span>Kuala.</span> <span>Pekerja</span> <span>keras,</span> <span>berdedikasi</span> <span>tinggi,</span> <span>dan</span> <span>adaptif.</span>
+                            </p>
+                            <div class="social-info inner-glass">📸 @niswa.azimah</div>
+                        </div>
+                    </div>
+
+                    <div class="card glass" id="leaf-zone">
+                        <div class="leaf-container">
+                            <span class="leaf">🍃</span><span class="leaf">🍂</span><span class="leaf">🌿</span>
+                        </div>
+                        <img src="assets/img2.jpg" alt="Activity" class="work-img large-img">
+                        <div class="work-info">
+                            <span class="work-title glow-text"> LATEST ACTIVITY / 2026</span>
+                            <p class="bio-short glow-text">
+                                <span>Mengerjakan</span> <span>Proyek</span> <span>Informatika</span> <span>di</span> <span>FMIPA</span> <span>Universitas</span> <span>Syiah</span> <span>Kuala</span> <span>dengan</span> <span>penuh</span> <span>semangat.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="riddle" class="page">
+                <div class="riddle-card glass">
+                    <h2 class="riddle-title handwriting">Teka-Teki Untukmu _</h2>
+                    <div class="riddle-box inner-glass">
+                        <p id="riddleText" class="glow-text"><span>Bunga</span> <span>apa</span> <span>yang</span> <span>paling</span> <span>cantik?</span></p>
+                        <input type="text" id="answerInput" placeholder="Ketik jawabanmu di sini...">
+                        <button onclick="checkAnswer()" class="check-btn">Cek Jawaban</button>
+                    </div>
+                    <p id="feedback" class="feedback-txt"></p>
+                </div>
+            </section>
+        </div>
+
+        <footer class="player-bar glass">
+            <audio id="audioTrack"><source src="assets/lagu.mp3" type="audio/mpeg"></audio>
+            <div class="player-left">
+                <button id="playBtn" class="play-circle-btn">▶</button>
+                <div class="track-meta">
+                    <span class="t-name">Semua Bunga Cantik</span>
+                    <span class="t-artist">clue</span>
+                </div>
+            </div>
+            <div class="player-right">
+                <div class="progress-wrapper">
+                    <span id="currentTime">0:00</span>
+                    <div class="bar-bg" id="progressBg"><div class="bar-fill" id="progressFill"></div></div>
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if(event) event.currentTarget.classList.add('active');
+        }
+
+        function checkAnswer() {
+            const val = document.getElementById('answerInput').value.toLowerCase();
+            const f = document.getElementById('feedback');
+            if(val.includes("semua")) {
+                f.innerText = "Bener banget! Bunga semuanya cantik ✨";
+                f.style.color = "#1DB954";
+            } else {
+                f.innerText = "Coba lagi... clue: liat dari sisi yang lebih luas!";
+                f.style.color = "#ff4331";
+            }
+        }
+
+        function burstEmojis(x, y, emojis) {
+            for(let i=0; i<15; i++) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+                s.style.left = x + 'px';
+                s.style.top = y + 'px';
+                s.style.setProperty('--dx', (Math.random()-0.5)*200 + 'px');
+                s.style.setProperty('--dy', (Math.random()-0.5)*200 + 'px');
+                document.getElementById('sparkle-container').appendChild(s);
+                setTimeout(() => s.remove(), 1000);
+            }
+        }
+
+        document.getElementById('interactive-profile').addEventListener('click', (e) => {
+            burstEmojis(e.clientX, e.clientY, ['✨','⭐','🌟']);
+        });
+
+        const audio = document.getElementById('audioTrack');
+        const playBtn = document.getElementById('playBtn');
+        playBtn.addEventListener('click', (e) => {
+            if(audio.paused) {
+                audio.play(); playBtn.innerText = "⏸";
+                burstEmojis(e.clientX, e.clientY, ['🎵','🎶','🎹']);
+            } else {
+                audio.pause(); playBtn.innerText = "▶";
+            }
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            const p = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('progressFill').style.width = p + "%";
+            let curM = Math.floor(audio.currentTime / 60);
+            let curS = Math.floor(audio.currentTime % 60);
+            document.getElementById('currentTime').innerText = `${curM}:${curS < 10 ? '0'+curS : curS}`;
+        });
+
+        audio.addEventListener('loadedmetadata', () => {
+            let durM = Math.floor(audio.duration / 60);
+            let durS = Math.floor(audio.duration % 60);
+            document.getElementById('duration').innerText = `${durM}:${durS < 10 ? '0'+durS : durS}`;
+        });
+    </script>
+</body>
+</html>
